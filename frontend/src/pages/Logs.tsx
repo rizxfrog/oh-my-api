@@ -48,7 +48,7 @@ export function Logs() {
     setReplayId(log.id);
     setReplayBody(log.downstream_req);
   };
-  const protocolLabel = (log: RequestLog) => log.ingress_protocol || (log.downstream_path === '/v1/messages' ? 'anthropic' : 'openai');
+  const protocolLabel = (log: RequestLog) => log.ingress_protocol || (log.downstream_path === '/lingma/v1/messages' ? 'anthropic' : 'openai');
 
   return (
     <div>

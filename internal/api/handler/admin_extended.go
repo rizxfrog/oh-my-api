@@ -886,7 +886,7 @@ func (s *Server) HandleAdminLogsReplay(w http.ResponseWriter, r *http.Request) {
 	id = strings.TrimSuffix(id, "/replay")
 	bodyBytes, _ := io.ReadAll(r.Body)
 	var replayBody io.ReadCloser
-	replayPath := "/v1/chat/completions"
+	replayPath := "/lingma/v1/chat/completions"
 	if len(bodyBytes) > 0 {
 		replayBody = io.NopCloser(bytes.NewReader(bodyBytes))
 	} else {
@@ -916,7 +916,7 @@ func (s *Server) HandleAdminLogsReplay(w http.ResponseWriter, r *http.Request) {
 	newReq.Method = http.MethodPost
 	newReq.URL.Path = replayPath
 	newReq.Body = replayBody
-	if replayPath == "/v1/messages" {
+	if replayPath == "/lingma/v1/messages" {
 		s.HandleAnthropicMessages(w, newReq)
 		return
 	}

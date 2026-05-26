@@ -212,7 +212,7 @@ func (s *Server) nonStreamResponse(
 
 	service.PersistCanonicalExecutionRecord(
 		ctx, s.DB, s.Deps.Now(), s.StoreExecutionLogs, traceID,
-		prePolicyRequest.Protocol, "/v1/responses",
+		prePolicyRequest.Protocol, "/lingma/v1/responses",
 		prePolicyRequest, postPolicyRequest, sessionCanonicalRequest,
 		chatRequest, messages, assistant, remoteRequest,
 		rawSSELines, promptTokens, completionTokens, totalTokens,
@@ -592,7 +592,7 @@ func (s *Server) streamResponse(
 
 	service.PersistCanonicalExecutionRecord(
 		request.Context(), s.DB, s.Deps.Now(), s.StoreExecutionLogs, traceID,
-		prePolicyRequest.Protocol, "/v1/responses",
+		prePolicyRequest.Protocol, "/lingma/v1/responses",
 		prePolicyRequest, postPolicyRequest, sessionCanonicalRequest,
 		chatRequest, messages, assistant, remoteRequest,
 		rawSSELines, promptTokens, completionTokens, totalTokens,

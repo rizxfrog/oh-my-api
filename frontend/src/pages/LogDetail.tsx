@@ -109,7 +109,7 @@ export function LogDetail() {
   ];
   const tabValue = String(log[tab as keyof RequestLog] || '');
   const copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
-  const protocolLabel = log.ingress_protocol || (log.downstream_path === '/v1/messages' ? 'anthropic' : 'openai');
+  const protocolLabel = log.ingress_protocol || (log.downstream_path === '/lingma/v1/messages' ? 'anthropic' : 'openai');
 
   return (
     <div>

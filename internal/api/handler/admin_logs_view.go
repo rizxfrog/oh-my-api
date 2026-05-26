@@ -224,10 +224,10 @@ func isHistoricalReplayMode(mode string) bool {
 }
 
 func replayEndpointForCanonicalRequest(request proxy.CanonicalRequest, ingressEndpoint string) string {
-	if request.Protocol == proxy.CanonicalProtocolAnthropic || ingressEndpoint == "/v1/messages" {
-		return "/v1/messages"
+	if request.Protocol == proxy.CanonicalProtocolAnthropic || ingressEndpoint == "/lingma/v1/messages" {
+		return "/lingma/v1/messages"
 	}
-	return "/v1/chat/completions"
+	return "/lingma/v1/chat/completions"
 }
 
 func marshalAnthropicReplayBodyFromCanonical(request proxy.CanonicalRequest) ([]byte, error) {

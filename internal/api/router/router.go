@@ -32,10 +32,10 @@ func New(deps model.Dependencies, store *db.Store, bootstrap *handler.BootstrapM
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/chat/completions", s.HandleChatCompletions)
-	mux.HandleFunc("/v1/messages", s.HandleAnthropicMessages)
-	mux.HandleFunc("/v1/responses", s.HandleResponses)
-	mux.HandleFunc("/v1/models", s.HandleModels)
+	mux.HandleFunc("/lingma/v1/chat/completions", s.HandleChatCompletions)
+	mux.HandleFunc("/lingma/v1/messages", s.HandleAnthropicMessages)
+	mux.HandleFunc("/lingma/v1/responses", s.HandleResponses)
+	mux.HandleFunc("/lingma/v1/models", s.HandleModels)
 	mux.HandleFunc("/admin/status", s.HandleAdminStatus)
 	mux.HandleFunc("/admin/overview", s.HandleAdminOverview)
 	mux.HandleFunc("/admin/sessions", s.HandleAdminSessions)

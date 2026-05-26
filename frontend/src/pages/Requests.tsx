@@ -52,7 +52,7 @@ export function Requests() {
     setDetailTab('request');
   }, []);
 
-  const protocolLabel = (log: RequestLog) => log.ingress_protocol || (log.downstream_path === '/v1/messages' ? 'anthropic' : 'openai');
+  const protocolLabel = (log: RequestLog) => log.ingress_protocol || (log.downstream_path === '/lingma/v1/messages' ? 'anthropic' : 'openai');
 
   const copyText = async (text: string) => {
     await navigator.clipboard.writeText(text);
