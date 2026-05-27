@@ -49,6 +49,11 @@ const REGION_LABEL: Record<AccountRegion, string> = {
   codebuddy: 'CodeBuddy',
 };
 
+const CB_EDITION_ENDPOINT: Record<string, string> = {
+  china: 'https://copilot.tencent.com',
+  international: 'https://www.codebuddy.ai',
+};
+
 const ROUTING_LABEL: Record<string, string> = {
   china_only: '只使用国内版',
   international_only: '只使用国际版',
@@ -135,6 +140,7 @@ export function Account() {
   const [activeTab, setActiveTab] = useState<'china' | 'international' | 'codebuddy'>('china');
   const [cbApiKey, setCbApiKey] = useState('');
   const [cbLabel, setCbLabel] = useState('');
+  const [cbEdition, setCbEdition] = useState<'china' | 'international'>('international');
   const [addingAccount, setAddingAccount] = useState(false);
 
   const load = async () => {
@@ -315,7 +321,8 @@ export function Account() {
     try {
       await addAccount({
         region: 'codebuddy',
-        label: cbLabel.trim() || 'CodeBuddy',
+        label: cbLabel.trim() || `CodeBuddy (${cbEdition === 'china' ? '中国版' : '国际版'})`,
+        endpoint_url: CB_EDITION_ENDPOINT[cbEdition],
         auth: { access_token: cbApiKey.trim() },
       });
       setCbApiKey('');
@@ -429,6 +436,22 @@ export function Account() {
         <div className="card">
           <h4>添加 CodeBuddy 账号</h4>
           <div className="account-callback-box">
+            <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+              <button
+                className={`btn ${cbEdition === 'china' ? 'btn-primary' : ''}`}
+                onClick={() => setCbEdition('china')}
+                type="button"
+              >
+                <Server size={14} /> 中国版
+              </button>
+              <button
+                className={`btn ${cbEdition === 'international' ? 'btn-primary' : ''}`}
+                onClick={() => setCbEdition('international')}
+                type="button"
+              >
+                <Globe2 size={14} /> 国际版
+              </button>
+            </div>
             <input
               className="input"
               placeholder="API Key (sk-...)"
@@ -574,7 +597,14 @@ export function Account() {
                     <div className="account-name">{accountName(account)}</div>
                     <div className="account-id">{account.id || '-'}</div>
                   </td>
-                  <td><RegionBadge region={account.region} /></td>
+                  <td>
+                    <RegionBadge region={account.region} />
+                    {account.region === 'codebuddy' && account.endpoint_url && (
+                      <span style={{ fontSize: 11, marginLeft: 4, opacity: 0.7 }}>
+                        {account.endpoint_url.includes('tencent.com') ? '中国版' : '国际版'}
+                      </span>
+                    )}
+                  </td>
                   <td>
                     <span className={`badge ${account.enabled && !account.token_expired ? 'badge-success' : 'badge-error'}`}>
                       {account.enabled ? (account.token_expired ? 'Token 过期' : '启用') : '停用'}

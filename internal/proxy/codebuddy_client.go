@@ -17,6 +17,11 @@ type CodeBuddyClient struct {
 	keywords   map[string]string
 }
 
+const (
+	CodeBuddyChinaBaseURL         = "https://copilot.tencent.com"
+	CodeBuddyInternationalBaseURL = "https://www.codebuddy.ai"
+)
+
 func NewCodeBuddyClient(baseURL string) *CodeBuddyClient {
 	return &CodeBuddyClient{
 		baseURL: strings.TrimRight(baseURL, "/"),
@@ -36,11 +41,15 @@ func NewCodeBuddyClient(baseURL string) *CodeBuddyClient {
 	}
 }
 
-func (c *CodeBuddyClient) SendChat(ctx context.Context, apiKey string, req OpenAIChatRequest) (io.ReadCloser, error) {
+func (c *CodeBuddyClient) SendChat(ctx context.Context, apiKey string, req OpenAIChatRequest, endpointURL string) (io.ReadCloser, error) {
 	req.Stream = true
 	req.Messages = c.applyKeywordReplacement(req.Messages)
 	body, _ := json.Marshal(req)
-	httpReq, _ := http.NewRequestWithContext(ctx, "POST", c.baseURL+"/v2/chat/completions", bytes.NewReader(body))
+	baseURL := c.baseURL
+	if endpointURL != "" {
+		baseURL = strings.TrimRight(endpointURL, "/")
+	}
+	httpReq, _ := http.NewRequestWithContext(ctx, "POST", baseURL+"/v2/chat/completions", bytes.NewReader(body))
 	for k, v := range c.buildHeaders(apiKey) {
 		httpReq.Header[k] = v
 	}

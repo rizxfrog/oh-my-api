@@ -58,7 +58,7 @@ Content-Type: application/json
   "session": "your-session-id"
 }
 
-### 添加 CodeBuddy 账号 (access_token 必填)
+### 添加 CodeBuddy 账号 (中国版)
 POST {{baseUrl}}/admin/account
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
@@ -66,14 +66,15 @@ Content-Type: application/json
 {
   "region": "codebuddy",
   "enabled": true,
-  "label": "my-codebuddy-account",
+  "label": "codebuddy-china",
+  "endpoint_url": "https://copilot.tencent.com",
   "auth": {
     "access_token": "ck_fn7vyognuv40.qOxGvXMBn9rjfZo1lz19JbJzbfFCWxoErTD8X1rcEfQ"
   }
 }
 
 
-### 添加 CodeBuddy 账号 (仅 access_token, 最简写法)
+### 添加 CodeBuddy 账号 (国际版)
 POST {{baseUrl}}/admin/account
 Authorization: Bearer {{adminToken}}
 Content-Type: application/json
@@ -81,7 +82,9 @@ Content-Type: application/json
 {
   "region": "codebuddy",
   "enabled": true,
+  "label": "codebuddy-international",
+  "endpoint_url": "https://www.codebuddy.ai",
   "auth": {
-    "access_token": "your-codebuddy-access-token"
+    "access_token": "your-international-access-token"
   }
 }

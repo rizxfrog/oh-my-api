@@ -29,7 +29,6 @@ func (s *Server) HandleCodeBuddyChat(w http.ResponseWriter, r *http.Request) {
 		response.WriteOpenAIError(w, http.StatusUnauthorized, "no codebuddy account: "+err.Error())
 		return
 	}
-	_ = account // reserved for future metadata use
 
 	body := http.MaxBytesReader(w, r.Body, 2<<20)
 	defer body.Close()
@@ -39,7 +38,7 @@ func (s *Server) HandleCodeBuddyChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	stream, err := s.CodeBuddyClient.SendChat(r.Context(), apiKey, chatReq)
+	stream, err := s.CodeBuddyClient.SendChat(r.Context(), apiKey, chatReq, account.EndpointURL)
 	if err != nil {
 		response.WriteOpenAIError(w, http.StatusBadGateway, "upstream: "+err.Error())
 		return

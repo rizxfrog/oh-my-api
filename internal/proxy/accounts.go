@@ -240,6 +240,7 @@ func schemaV2AccountSnapshots(stored StoredCredentialFile, loadedAt time.Time) (
 			UpdatedAt:         firstNonEmpty(storedAccount.UpdatedAt, stored.UpdatedAt),
 			TokenExpireTime:   parseExpireTime(tokenExpireTime),
 			LoadedAt:          loadedAt,
+			EndpointURL:       storedAccount.EndpointURL,
 		}
 		if err := validateAccountSnapshot(account); err != nil {
 			return nil, err
@@ -311,6 +312,9 @@ func generatedAccountID(account StoredCredentialAccount) string {
 			string(account.Region),
 			account.Label,
 			account.Auth.AccessToken,
+		}
+		if account.EndpointURL != "" {
+			parts = append(parts, account.EndpointURL)
 		}
 	} else {
 		parts = []string{

@@ -109,7 +109,11 @@ internal/
 | 区域 | 哈希输入 | 说明 |
 |------|----------|------|
 | `china` / `international` | `region + user_id + machine_id` | Lingma 账号，要求 `user_id` 和 `machine_id` 均非空 |
-| `codebuddy` | `region + label + access_token` | CodeBuddy 账号，仅要求 `access_token` 非空；`label` 用于区分多账号 |
+| `codebuddy` | `region + label + access_token [+ endpoint_url]` | CodeBuddy 账号，仅要求 `access_token` 非空；`label` 用于区分多账号；`endpoint_url` 非空时参与哈希以区分中国版/国际版 |
+
+CodeBuddy 账号支持 `endpoint_url` 字段，决定上游请求地址：
+- 中国版：`https://copilot.tencent.com`
+- 国际版：`https://www.codebuddy.ai`（默认）
 
 相同 ID 的重复提交触发 upsert（覆盖更新），不会产生重复条目。
 

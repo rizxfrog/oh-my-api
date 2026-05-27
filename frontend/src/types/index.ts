@@ -226,6 +226,7 @@ export interface AccountSummary {
   has_access_token: boolean;
   has_refresh_token: boolean;
   token_expired: boolean;
+  endpoint_url?: string;
 }
 
 export interface AccountTokenStats {

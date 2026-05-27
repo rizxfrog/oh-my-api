@@ -221,6 +221,7 @@ type AccountSnapshot struct {
 	UpdatedAt         string        `json:"updated_at,omitempty"`
 	TokenExpireTime   int64         `json:"token_expire_time"`
 	LoadedAt          time.Time     `json:"loaded_at"`
+	EndpointURL       string        `json:"endpoint_url,omitempty"`
 }
 
 type AccountSummary struct {
@@ -241,6 +242,7 @@ type AccountSummary struct {
 	HasAccessToken    bool          `json:"has_access_token"`
 	HasRefreshToken   bool          `json:"has_refresh_token"`
 	TokenExpired      bool          `json:"token_expired"`
+	EndpointURL       string        `json:"endpoint_url,omitempty"`
 }
 
 func (s CredentialSnapshot) IsTokenExpired(graceMargin time.Duration) bool {
@@ -293,6 +295,7 @@ func (a AccountSnapshot) ToStoredAccount() StoredCredentialAccount {
 			AccessToken:  a.AccessToken,
 			RefreshToken: a.RefreshToken,
 		},
+		EndpointURL: a.EndpointURL,
 	}
 }
 
@@ -315,6 +318,7 @@ func (a AccountSnapshot) Summary(grace time.Duration) AccountSummary {
 		HasAccessToken:    a.AccessToken != "",
 		HasRefreshToken:   a.RefreshToken != "",
 		TokenExpired:      a.IsTokenExpired(grace),
+		EndpointURL:       a.EndpointURL,
 	}
 }
 
@@ -349,6 +353,7 @@ type StoredCredentialAccount struct {
 	TokenExpireTime   string            `json:"token_expire_time,omitempty"`
 	Auth              StoredAuthFields  `json:"auth"`
 	OAuth             StoredOAuthFields `json:"oauth,omitempty"`
+	EndpointURL       string            `json:"endpoint_url,omitempty"`
 }
 
 type StoredAuthFields struct {
